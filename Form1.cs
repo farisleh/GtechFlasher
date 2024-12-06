@@ -249,7 +249,7 @@ namespace GTechFlasher
         {
             try
             {
-                Thread.Sleep(500);
+                Thread.Sleep(400);
                 string data = Serial.ReadExisting();
                 string cleanedData = Regex.Replace(data, @"\x1B\[[0-9;]*[a-zA-Z]|prism:~ \$", string.Empty);
 
