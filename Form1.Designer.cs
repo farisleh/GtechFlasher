@@ -518,6 +518,7 @@
             Controls.Add(tableLayoutPanel1);
             Controls.Add(pictureBox1);
             Controls.Add(groupBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "GTech Flasher";
             Load += Form1_Load;
