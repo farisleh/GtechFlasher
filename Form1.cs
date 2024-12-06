@@ -52,7 +52,7 @@ namespace GTechFlasher
             portBox.DropDown += (s, ev) => UpdateCOMPortList();
         }
 
-        private void ExecuteCommand()
+        private async Task ExecuteCommand()
         {
             try
             {
@@ -111,39 +111,18 @@ namespace GTechFlasher
                 };
 
                 Process process = Process.Start(processInfo);
-                string result = process.StandardOutput.ReadToEnd();
-                string error = process.StandardError.ReadToEnd();
-                process.WaitForExit();
+                string result = await process.StandardOutput.ReadToEndAsync();
+                string error = await process.StandardError.ReadToEndAsync();
+                await process.WaitForExitAsync();
 
 
                 if (process.ExitCode == 0)
                 {
-                    string successMessage = "Programming completed successfully.";
-                    label15.BackColor = Color.Green;
-                    label15.ForeColor = Color.White;
-                    label15.Text = "SUCCESS";
-
-                    if (autoRadio.Checked == true)
-                    {
-                        newSerialNumber = int.Parse(serialNumberNext) + 1;
-                    }
-                    else
-                    {
-                        newSerialNumber = int.Parse(userInput) + 1;
-                    }
-                    
-                    File.WriteAllText(filePath, newSerialNumber.ToString());
-                    textBox1.Clear();
-                    textBox1.AppendText($"{result}\n{successMessage}");
+                    SuccessOutput(result);
                 }
                 else
                 {
-                    string errorMessage = $"Error occurred during programming:\n{error}";
-                    label15.BackColor = Color.Red;
-                    label15.ForeColor = Color.White;
-                    label15.Text = "FAILED";
-                    textBox1.AppendText(errorMessage);
-                    MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    FailOutput(error);
                 }
             }
             catch (FileNotFoundException fnfEx)
@@ -156,6 +135,38 @@ namespace GTechFlasher
                 textBox1.AppendText($"Error: {ex.Message}");
                 MessageBox.Show($"Error executing command: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void SuccessOutput(string result)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                label15.BackColor = Color.Green;
+                label15.ForeColor = Color.White;
+                label15.Text = "SUCCESS";
+
+                newSerialNumber = autoRadio.Checked
+                    ? int.Parse(serialNumberNext) + 1
+                    : int.Parse(userInput) + 1;
+
+                File.WriteAllText(filePath, newSerialNumber.ToString());
+                textBox1.Clear();
+                textBox1.AppendText($"{result}\nProgramming completed successfully.");
+            });
+        }
+
+        private void FailOutput(string error)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                label15.BackColor = Color.Red;
+                label15.ForeColor = Color.White;
+                label15.Text = "FAILED";
+
+                string errorMessage = $"Error occurred during programming:\n{error}";
+                textBox1.AppendText(errorMessage);
+                MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            });
         }
 
         private void connectButton_Click(object sender, EventArgs e)
@@ -238,7 +249,7 @@ namespace GTechFlasher
         {
             try
             {
-                Thread.Sleep(100);
+                Thread.Sleep(500);
                 string data = Serial.ReadExisting();
                 string cleanedData = Regex.Replace(data, @"\x1B\[[0-9;]*[a-zA-Z]|prism:~ \$", string.Empty);
 
@@ -304,7 +315,7 @@ namespace GTechFlasher
             }
         }
 
-        private void startButton_Click(object sender, EventArgs e)
+        private async void startButton_Click(object sender, EventArgs e)
         {
             bool processSucceeded = true;
 
@@ -367,7 +378,7 @@ namespace GTechFlasher
 
                 try
                 {
-                    ExecuteCommand();
+                    await ExecuteCommand();
                     processSucceeded = label15.Text == "SUCCESS";
                     serialNumberNext = File.ReadAllText(filePath);
                     label17.Text = serialNumberNext;
