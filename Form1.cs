@@ -116,7 +116,7 @@ namespace GTechFlasher
                 await process.WaitForExitAsync();
 
 
-                if (process.ExitCode == 0)
+                if (!result.Contains("Failed"))
                 {
                     SuccessOutput(result);
                 }
@@ -164,6 +164,7 @@ namespace GTechFlasher
                 label15.Text = "FAILED";
 
                 string errorMessage = $"Error occurred during programming:\n{error}";
+                textBox1.Clear();
                 textBox1.AppendText(errorMessage);
                 MessageBox.Show(errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             });

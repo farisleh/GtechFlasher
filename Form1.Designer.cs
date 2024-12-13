@@ -388,9 +388,9 @@
             productionButton.FlatStyle = FlatStyle.Flat;
             productionButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             productionButton.ForeColor = SystemColors.ButtonHighlight;
-            productionButton.Location = new Point(568, 445);
+            productionButton.Location = new Point(543, 448);
             productionButton.Name = "productionButton";
-            productionButton.Size = new Size(86, 36);
+            productionButton.Size = new Size(99, 36);
             productionButton.TabIndex = 5;
             productionButton.Text = "Production";
             productionButton.UseVisualStyleBackColor = false;
@@ -402,9 +402,9 @@
             testButton.FlatStyle = FlatStyle.Flat;
             testButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             testButton.ForeColor = SystemColors.ButtonHighlight;
-            testButton.Location = new Point(660, 445);
+            testButton.Location = new Point(648, 448);
             testButton.Name = "testButton";
-            testButton.Size = new Size(86, 36);
+            testButton.Size = new Size(99, 36);
             testButton.TabIndex = 6;
             testButton.Text = "Test";
             testButton.UseVisualStyleBackColor = false;
@@ -416,9 +416,9 @@
             debugButton.FlatStyle = FlatStyle.Flat;
             debugButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             debugButton.ForeColor = SystemColors.ButtonHighlight;
-            debugButton.Location = new Point(752, 445);
+            debugButton.Location = new Point(753, 448);
             debugButton.Name = "debugButton";
-            debugButton.Size = new Size(86, 36);
+            debugButton.Size = new Size(99, 36);
             debugButton.TabIndex = 7;
             debugButton.Text = "Debug";
             debugButton.UseVisualStyleBackColor = false;
@@ -482,9 +482,9 @@
             packButton.FlatStyle = FlatStyle.Flat;
             packButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             packButton.ForeColor = SystemColors.ButtonHighlight;
-            packButton.Location = new Point(844, 445);
+            packButton.Location = new Point(858, 448);
             packButton.Name = "packButton";
-            packButton.Size = new Size(86, 36);
+            packButton.Size = new Size(99, 36);
             packButton.TabIndex = 13;
             packButton.Text = "Pack";
             packButton.UseVisualStyleBackColor = false;
